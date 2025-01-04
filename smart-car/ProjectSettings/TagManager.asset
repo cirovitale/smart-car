@@ -8,6 +8,7 @@ TagManager:
   - Crossing
   - RoadLine
   - TrafficLight
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - Walls
   - Crossings
   - RoadLine
-  - 
+  - Checkpoints
   - 
   - 
   - 
