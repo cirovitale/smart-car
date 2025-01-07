@@ -5,17 +5,17 @@ public class setCheckpointID : MonoBehaviour
     public float row;
     public float column;
 
-    private checkpointsManager checksManager;
+    private CheckpointsManager checksManager;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<AgentCarController>(out AgentCarController player))
+        if (other.TryGetComponent<CarAgent>(out CarAgent player))
         {
-            checksManager.PlayerWentThroughCheck(this, other.transform);
+            checksManager.PlayerWentThroughCheck(this, other.transform);           
         }
     }
 
-    public void setRoadCheckpoints(checkpointsManager checksManager)
+    public void setRoadCheckpoints(CheckpointsManager checksManager)
     {
         this.checksManager = checksManager;
     }

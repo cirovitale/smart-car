@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class checkpointsManager : MonoBehaviour
+public class CheckpointsManager : MonoBehaviour
 {
     [SerializeField] private setCheckpointID[,] mappaCheckpoints = new setCheckpointID[15, 27];
     private List<List<CheckpointsListHandler>> nextPossibleCheckpoints;
@@ -9,7 +9,7 @@ public class checkpointsManager : MonoBehaviour
     [SerializeField] private List<Transform> carTransformList;
     private List<setCheckpointID> lastCheckpointsList;
 
-    void Awake()
+    public void ResetCheckpoints()
     {
         lastCheckpointsList = new List<setCheckpointID>();
         nextPossibleCheckpoints = new List<List<CheckpointsListHandler>>();
@@ -56,18 +56,18 @@ public class checkpointsManager : MonoBehaviour
         List<CheckpointsListHandler> actualCarPossibleChecks = nextPossibleCheckpoints[nextChecksIndex];
         setCheckpointID lastCheckpointCar = lastCheckpointsList[nextChecksIndex];
 
-        Debug.Log("Lista check possibili");
-        for (int i = 0; i < actualCarPossibleChecks.Count; i++)
-        {
-            Debug.Log(actualCarPossibleChecks[i].row);
-            Debug.Log(actualCarPossibleChecks[i].column);
-        }
-        Debug.Log("checkpoint attuale");
-        Debug.Log(checkpoint.row);
-        Debug.Log(checkpoint.column);
-        Debug.Log("last checkpoint");
-        Debug.Log(lastCheckpointCar.row);
-        Debug.Log(lastCheckpointCar.column);
+        // Debug.Log("Lista check possibili");
+        // for (int i = 0; i < actualCarPossibleChecks.Count; i++)
+        // {
+        //     Debug.Log(actualCarPossibleChecks[i].row);
+        //     Debug.Log(actualCarPossibleChecks[i].column);
+        // }
+        // Debug.Log("checkpoint attuale");
+        // Debug.Log(checkpoint.row);
+        // Debug.Log(checkpoint.column);
+        // Debug.Log("last checkpoint");
+        // Debug.Log(lastCheckpointCar.row);
+        // Debug.Log(lastCheckpointCar.column);
 
 
         //Debug.Log("prelevato check");
@@ -100,7 +100,8 @@ public class checkpointsManager : MonoBehaviour
                 {
                     //checkpoint trovato!
                     //qui bisogna fare la chiamata per assegnare reward positivo TODO
-                    Debug.Log("checkpoint trovato!");
+                    carTransform.GetComponent<CarAgent>().AddReward(2f);
+                    Debug.Log("[checkpoint trovato!] +2");
                     isCheckTrovato = true;
                     continue;
                 }
@@ -108,6 +109,8 @@ public class checkpointsManager : MonoBehaviour
             if (!isCheckTrovato)
             {
                 //reward negativo da mandare all'AI TODO
+                carTransform.GetComponent<CarAgent>().AddReward(-2f);
+                Debug.Log("[checkpoint trovato!] -2");
             }
         }
 
