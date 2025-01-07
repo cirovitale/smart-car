@@ -5,15 +5,15 @@ using Unity.MLAgents.Actuators;
 
 public class AgentCarController : Agent
 {
-    [SerializeField] private Transform target;
+    // [SerializeField] private Transform target;
 
     //onEpisodeBegin() da fare, praticamente spawna la macchina
 
     public override void CollectObservations(VectorSensor sensor)
     {
         //penso sia da implementare meglio, deve puntare sempre al checkpoint successivo perchè così impara ad andare dritto TODO
-        sensor.AddObservation(transform.localPosition);
-        sensor.AddObservation(target.localPosition);
+        //sensor.AddObservation(transform.localPosition);
+        //sensor.AddObservation(target.localPosition);
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -40,7 +40,7 @@ public class AgentCarController : Agent
         transform.localPosition += new Vector3(forwardAmount, 0f) * Time.deltaTime * moveSpeed;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    /*private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.TryGetComponent<Wall>(out Wall wall))
         {
@@ -54,5 +54,5 @@ public class AgentCarController : Agent
         {
             AddReward(-0.1f);
         }
-    }
+    }*/
 }

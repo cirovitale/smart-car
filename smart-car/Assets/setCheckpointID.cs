@@ -5,15 +5,18 @@ public class setCheckpointID : MonoBehaviour
     public float row;
     public float column;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
+    private checkpointsManager checksManager;
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent<AgentCarController>(out AgentCarController player))
+        {
+            checksManager.PlayerWentThroughCheck(this, other.transform);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void setRoadCheckpoints(checkpointsManager checksManager)
     {
-
+        this.checksManager = checksManager;
     }
 }

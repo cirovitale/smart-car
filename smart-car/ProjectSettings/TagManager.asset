@@ -9,6 +9,7 @@ TagManager:
   - RoadLine
   - TrafficLight
   - Checkpoint
+  - CarAgent
   layers:
   - Default
   - TransparentFX
