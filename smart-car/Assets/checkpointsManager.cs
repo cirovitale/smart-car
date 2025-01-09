@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//TODO capire errore cannot create new with monoBehaviour 
+
 public class CheckpointsManager : MonoBehaviour
 {
     [SerializeField] private setCheckpointID[,] mappaCheckpoints = new setCheckpointID[15, 27];
@@ -56,24 +58,20 @@ public class CheckpointsManager : MonoBehaviour
         List<CheckpointsListHandler> actualCarPossibleChecks = nextPossibleCheckpoints[nextChecksIndex];
         setCheckpointID lastCheckpointCar = lastCheckpointsList[nextChecksIndex];
 
-        // Debug.Log("Lista check possibili");
-        // for (int i = 0; i < actualCarPossibleChecks.Count; i++)
-        // {
-        //     Debug.Log(actualCarPossibleChecks[i].row);
-        //     Debug.Log(actualCarPossibleChecks[i].column);
-        // }
-        // Debug.Log("checkpoint attuale");
-        // Debug.Log(checkpoint.row);
-        // Debug.Log(checkpoint.column);
-        // Debug.Log("last checkpoint");
-        // Debug.Log(lastCheckpointCar.row);
-        // Debug.Log(lastCheckpointCar.column);
+        /*Debug.Log("Lista check possibili");
+        for (int i = 0; i < actualCarPossibleChecks.Count; i++)
+        {
+            Debug.Log(actualCarPossibleChecks[i].row);
+            Debug.Log(actualCarPossibleChecks[i].column);
+        }
+        Debug.Log("checkpoint attuale");
+        Debug.Log(checkpoint.row);
+        Debug.Log(checkpoint.column);
+        Debug.Log("last checkpoint");
+        Debug.Log(lastCheckpointCar.row);
+        Debug.Log(lastCheckpointCar.column);*/
 
 
-        //Debug.Log("prelevato check");
-        //Debug.Log(actualCarPossibleChecks);
-        //Debug.Log("con indice macchina");
-        //Debug.Log(nextChecksIndex);
 
         //preleviamo valori check
         CheckpointsListHandler checkRaggiunto = new CheckpointsListHandler();
@@ -99,7 +97,6 @@ public class CheckpointsManager : MonoBehaviour
                 if ((actualCarPossibleChecks[i].row == checkRaggiunto.row) && (actualCarPossibleChecks[i].column == checkRaggiunto.column))
                 {
                     //checkpoint trovato!
-                    //qui bisogna fare la chiamata per assegnare reward positivo TODO
                     carTransform.GetComponent<CarAgent>().AddReward(2f);
                     Debug.Log("[checkpoint trovato!] +2");
                     isCheckTrovato = true;
@@ -108,9 +105,8 @@ public class CheckpointsManager : MonoBehaviour
             }
             if (!isCheckTrovato)
             {
-                //reward negativo da mandare all'AI TODO
                 carTransform.GetComponent<CarAgent>().AddReward(-2f);
-                Debug.Log("[checkpoint trovato!] -2");
+                Debug.Log("[checkpoint non trovato!] -2");
             }
         }
 
@@ -123,14 +119,75 @@ public class CheckpointsManager : MonoBehaviour
 
             if (isTempTrovato)
             {
-                //per risolverlo penso si debba far partire la macchina da un posto fisso (e.g. in alto a destra); in alternativa si può variare il lastCheckpointsList per ogni macchina TODO
                 Debug.Log("Primo checkpoint superato");
-                //setup del prossimo fisso a 1,4 per testing, lastCheck 1,3
-                CheckpointsListHandler temp2 = new CheckpointsListHandler();
-                temp2.initObj(2, 4);
-                actualCarPossibleChecks.Add(temp2);
-                lastCheckpointCar.row = 2;
-                lastCheckpointCar.column = 3;
+                // fare un if dove se la riga o colonna equivale ad una delle corsie destre allora ci mettiamo quello dopo, se no verso sinistra, mettere anche le intersez.
+                if (checkpoint.row == 2 || checkpoint.row == 8 || checkpoint.row == 14)
+                {
+                    //+1 colonna e incroci
+                    CheckpointsListHandler temp2 = new CheckpointsListHandler();
+                    temp2.initObj((int)checkpoint.row, (int)checkpoint.column + 1);
+                    actualCarPossibleChecks.Add(temp2);
+                    CheckpointsListHandler temp3 = new CheckpointsListHandler();
+                    temp3.initObj((int)checkpoint.row - 2, (int)checkpoint.column + 2);
+                    actualCarPossibleChecks.Add(temp3);
+                    CheckpointsListHandler temp4 = new CheckpointsListHandler();
+                    temp4.initObj((int)checkpoint.row + 0, (int)checkpoint.column + 3);
+                    actualCarPossibleChecks.Add(temp4);
+                    CheckpointsListHandler temp5 = new CheckpointsListHandler();
+                    temp5.initObj((int)checkpoint.row + 1, (int)checkpoint.column + 1);
+                    actualCarPossibleChecks.Add(temp5);
+                }
+                else if (checkpoint.row == 1 || checkpoint.row == 7 || checkpoint.row == 13)
+                {
+                    //-1 colonna e incroci
+                    CheckpointsListHandler temp2 = new CheckpointsListHandler();
+                    temp2.initObj((int)checkpoint.row, (int)checkpoint.column - 1);
+                    actualCarPossibleChecks.Add(temp2);
+                    CheckpointsListHandler temp3 = new CheckpointsListHandler();
+                    temp3.initObj((int)checkpoint.row + 2, (int)checkpoint.column - 2);
+                    actualCarPossibleChecks.Add(temp3);
+                    CheckpointsListHandler temp4 = new CheckpointsListHandler();
+                    temp4.initObj((int)checkpoint.row + 0, (int)checkpoint.column - 3);
+                    actualCarPossibleChecks.Add(temp4);
+                    CheckpointsListHandler temp5 = new CheckpointsListHandler();
+                    temp5.initObj((int)checkpoint.row - 1, (int)checkpoint.column - 1);
+                    actualCarPossibleChecks.Add(temp5);
+                }
+                else if (checkpoint.column == 2 || checkpoint.column == 8 || checkpoint.column == 14 || checkpoint.column == 20 || checkpoint.column == 26)
+                {
+                    //-1 riga e incroci
+                    CheckpointsListHandler temp2 = new CheckpointsListHandler();
+                    temp2.initObj((int)checkpoint.row - 1, (int)checkpoint.column);
+                    actualCarPossibleChecks.Add(temp2);
+                    CheckpointsListHandler temp3 = new CheckpointsListHandler();
+                    temp3.initObj((int)checkpoint.row - 2, (int)checkpoint.column - 2);
+                    actualCarPossibleChecks.Add(temp3);
+                    CheckpointsListHandler temp4 = new CheckpointsListHandler();
+                    temp4.initObj((int)checkpoint.row - 3, (int)checkpoint.column + 0);
+                    actualCarPossibleChecks.Add(temp4);
+                    CheckpointsListHandler temp5 = new CheckpointsListHandler();
+                    temp5.initObj((int)checkpoint.row - 1, (int)checkpoint.column + 1);
+                    actualCarPossibleChecks.Add(temp5);
+                }
+                else
+                {
+                    //+1 riga e incroci
+                    CheckpointsListHandler temp2 = new CheckpointsListHandler();
+                    temp2.initObj((int)checkpoint.row + 1, (int)checkpoint.column);
+                    actualCarPossibleChecks.Add(temp2);
+                    CheckpointsListHandler temp3 = new CheckpointsListHandler();
+                    temp3.initObj((int)checkpoint.row + 2, (int)checkpoint.column + 2);
+                    actualCarPossibleChecks.Add(temp3);
+                    CheckpointsListHandler temp4 = new CheckpointsListHandler();
+                    temp4.initObj((int)checkpoint.row + 3, (int)checkpoint.column + 0);
+                    actualCarPossibleChecks.Add(temp4);
+                    CheckpointsListHandler temp5 = new CheckpointsListHandler();
+                    temp5.initObj((int)checkpoint.row - 1, (int)checkpoint.column - 1);
+                    actualCarPossibleChecks.Add(temp5);
+                }
+
+                lastCheckpointCar.row = checkpoint.row;
+                lastCheckpointCar.column = checkpoint.column;
 
             }
             else if ((checkpoint.column == lastCheckpointCar.column) && (checkpoint.row == (lastCheckpointCar.row + 1)))
@@ -370,11 +427,8 @@ public class CheckpointsManager : MonoBehaviour
 
         }
 
-        //si potrebbe anche togliere questa guarda e fare che il precedente, quando si inizia, è il primo superato TODO
-        if (!isTempTrovato)
-        {
-            lastCheckpointCar.row = checkpoint.row;
-            lastCheckpointCar.column = checkpoint.column;
-        }
+        //assegna check precedente
+        lastCheckpointCar.row = checkpoint.row;
+        lastCheckpointCar.column = checkpoint.column;
     }
 }
