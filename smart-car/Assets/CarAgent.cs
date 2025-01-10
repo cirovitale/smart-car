@@ -51,10 +51,7 @@ public class CarAgent : Agent
     // Raccolta osservazioni
     public override void CollectObservations(VectorSensor sensor)
     {
-        // Esempio di osservazioni: velocità lineare, velocità angolare, direzione forward
-        sensor.AddObservation(carRigidbody.linearVelocity.magnitude);
-        sensor.AddObservation(carRigidbody.angularVelocity);
-        sensor.AddObservation(transform.forward);
+        // TODO da implementare
     }
 
     // Viene chiamato ogni volta che l’agente riceve una decisione
@@ -82,12 +79,11 @@ public class CarAgent : Agent
     // Applica le forze di movimento
     private void ApplyMovement()
     {
-        // Adatta questi valori in base alla massa del rigidbody e al feeling di guida
         float moveForce = 0f;
         if (m_Accelerate) moveForce = 500f;   // spinta in avanti
         if (m_Brake)      moveForce = -300f; // spinta all’indietro (o freno)
 
-        // Sterzata (torque)
+        // Sterzata
         float turnTorque = m_Steering * 100f;
 
         // Aggiungi forza in avanti
@@ -97,19 +93,18 @@ public class CarAgent : Agent
         carRigidbody.AddTorque(Vector3.up * turnTorque);
     }
 
-    // Esempio di penalità su collisione con muri/ostacoli
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Wall"))
         {
-            AddReward(-1.5f);
-            Debug.Log("[Wall Enter] -1");
+            AddReward(-2f);
+            Debug.Log("[Wall Enter] -2");
             // EndEpisode();
         }
         if (collision.gameObject.CompareTag("Car"))
         {
-            AddReward(-1.5f);
-            Debug.Log("[Car Enter] -1.5");
+            AddReward(-2f);
+            Debug.Log("[Car Enter] -2");
         }
     }
 
@@ -117,23 +112,36 @@ public class CarAgent : Agent
     {
         if (collision.gameObject.CompareTag("Wall"))
         {
-            AddReward(-0.5f);
-            Debug.Log("[Wall Stay] -0.5");
+            AddReward(-0.25f);
+            Debug.Log("[Wall Stay] -0.25");
         }
         if (collision.gameObject.CompareTag("Car"))
         {
-            AddReward(-0.5f);
-            Debug.Log("[Car Stay] -0.5");
+            AddReward(-0.25f);
+            Debug.Log("[Car Stay] -0.25");
         }
     }
 
-    // Esempio di penalità o bonus su Trigger
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            AddReward(+3f);
+            Debug.Log("[Wall Exit] +3");
+        }
+        if (collision.gameObject.CompareTag("Car"))
+        {
+            AddReward(+3f);
+            Debug.Log("[Car Exit] +3");
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("RoadLine"))
         {
-            AddReward(-0.2f);
-            Debug.Log("[RoadLine Enter] -0.2");
+            AddReward(-1f);
+            Debug.Log("[RoadLine Enter] -1");
         }
 
         if (other.CompareTag("Crossing"))
@@ -150,17 +158,23 @@ public class CarAgent : Agent
             float crossingEndTime = Time.time;
             float crossingDuration = crossingEndTime - crossingStartTime;
             // Debug.Log("[Trigger Exit - Crossing] at time: " + crossingEndTime);
-            Debug.Log("[Trigger Exit - Crossing] crossing in " + crossingDuration + " seconds");
+            // Debug.Log("[Trigger Exit - Crossing] crossing in " + crossingDuration + " seconds");
             if (crossingDuration < 2.0f)
             {
-                AddReward(-0.5f);
-                Debug.Log("[Crossing Exit] -0.5");
+                AddReward(-1f);
+                Debug.Log("[Crossing Exit] -1");
             }
             else
             {
-                AddReward(+0.5f);
-                Debug.Log("[Crossing Exit] +0.5");
+                AddReward(+2f);
+                Debug.Log("[Crossing Exit] +2");
             }
+        }
+
+        if (other.CompareTag("RoadLine"))
+        {
+            AddReward(+1f);
+            Debug.Log("[RoadLine Exit] +1");
         }
     }
 

@@ -165,10 +165,11 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 5000
+  MaxStep: 7500
   carRigidbody: {fileID: 4990146831045481994}
   spawnPosition: {x: 0, y: 0, z: 0}
   spawnForward: {x: 0, y: 0, z: 1}
+  checksManager: {fileID: 0}
 --- !u!65 &2624463992555100440
 BoxCollider:
   m_ObjectHideFlags: 0
