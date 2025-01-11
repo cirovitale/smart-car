@@ -190,7 +190,7 @@ public class CheckpointsManager : MonoBehaviour
                 lastCheckpointCar.column = checkpoint.column;
 
             }
-            else if ((checkpoint.column == lastCheckpointCar.column) && (checkpoint.row == (lastCheckpointCar.row + 1)))
+            else if (((int)checkpoint.row + 1 <= 14) && (checkpoint.column == lastCheckpointCar.column) && (checkpoint.row == (lastCheckpointCar.row + 1)))
             { //attuale = precedente con colonna uguale e +1 riga (stiamo scendendo sulla verticale, corsia sinistra)
                 if (mappaCheckpoints[(int)checkpoint.row + 1, (int)checkpoint.column] != null)
                 {
@@ -227,7 +227,7 @@ public class CheckpointsManager : MonoBehaviour
                     }
                 }
             }
-            else if ((checkpoint.column == lastCheckpointCar.column) && (checkpoint.row == (lastCheckpointCar.row - 1)))
+            else if (((int)checkpoint.row - 1 > 0) && (checkpoint.column == lastCheckpointCar.column) && (checkpoint.row == (lastCheckpointCar.row - 1)))
             { //attuale = precedente con colonna uguale e -1 riga (stiamo salendo sulla verticale, corsia destra)
                 if (mappaCheckpoints[(int)checkpoint.row - 1, (int)checkpoint.column] != null)
                 {
@@ -265,7 +265,7 @@ public class CheckpointsManager : MonoBehaviour
                     }
                 }
             }
-            else if ((checkpoint.row == lastCheckpointCar.row) && (checkpoint.column == (lastCheckpointCar.column - 1)))
+            else if (((int)checkpoint.column - 1 > 0) && (checkpoint.row == lastCheckpointCar.row) && (checkpoint.column == (lastCheckpointCar.column - 1)))
             { //attuale = precedente con riga uguale e -1 colonna (stiamo andando a sinistra sull'orizzontale)
                 if (mappaCheckpoints[(int)checkpoint.row, (int)checkpoint.column - 1] != null)
                 {
@@ -303,7 +303,7 @@ public class CheckpointsManager : MonoBehaviour
                     }
                 }
             }
-            else if ((checkpoint.row == lastCheckpointCar.row) && (checkpoint.column == (lastCheckpointCar.column + 1)))
+            else if (((int)checkpoint.column + 1 <= 26) && (checkpoint.row == lastCheckpointCar.row) && (checkpoint.column == (lastCheckpointCar.column + 1)))
             { //attuale = precedente con riga uguale e +1 colonna (stiamo andando a destra sull'orizzontale)
                 if (mappaCheckpoints[(int)checkpoint.row, (int)checkpoint.column + 1] != null)
                 {
