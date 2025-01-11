@@ -6,105 +6,150 @@ using Unity.MLAgents.Actuators;
 [RequireComponent(typeof(Rigidbody))]
 public class CarAgent : Agent
 {
-    [SerializeField] private Rigidbody carRigidbody; 
-    private float crossingStartTime;
-
-    [SerializeField] private Vector3 spawnPosition;
-    [SerializeField] private Vector3 spawnForward;
+    [SerializeField] private Rigidbody carRigidbody;
+    public bool isManualControl = false;
 
     public CheckpointsManager checksManager;
 
-    // Variabili di controllo
-    private float m_Steering;
-    private bool m_Accelerate;
-    private bool m_Brake;
+    private float crossingStartTime;
+
+    // Parametri di guida - la velocità è in m/s, l'accelerazione in m/s^2
+    [SerializeField] private float maxForwardSpeed = 30f;
+    [SerializeField] private float maxBackwardSpeed = 25f;
+    [SerializeField] private float acceleration = 20f;
+    [SerializeField] private float brakingDeceleration = 20f;
+    [SerializeField] private float idleDeceleration = 10f;
+    [SerializeField] private float turnSpeed = 180f;
+
+    private float currentSpeed = 0f;  
+    private float steeringInput;  
+    private bool accelerateInput;     // Acceleratore
+    private bool brakeInput;          // Freno
+
+    private Vector3 spawnPosition;
+    private Quaternion spawnRotation;
 
     private void Awake()
     {
         carRigidbody = GetComponent<Rigidbody>();
+        carRigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
     }
 
     private void Start()
     {
-        spawnPosition = carRigidbody.transform.position;
-        spawnForward = carRigidbody.transform.forward;
+        spawnPosition = transform.position;
+        spawnRotation = transform.rotation;
     }
 
-    // Chiamato a inizio episodio
     public override void OnEpisodeBegin()
     {
         checksManager.ResetCheckpoints();
-        // 1. Azzeramento velocità
+
+        // Reset fisica
         carRigidbody.linearVelocity = Vector3.zero;
         carRigidbody.angularVelocity = Vector3.zero;
 
-        // 2. Reset posizione e rotazione
-        carRigidbody.transform.position = spawnPosition;
-        carRigidbody.transform.rotation = Quaternion.LookRotation(spawnForward);
+        // Reset posizione e rotazione
+        transform.position = spawnPosition;
+        transform.rotation = spawnRotation;
 
-        // 3. Reset variabili di controllo
-        m_Steering = 0f;
-        m_Accelerate = false;
-        m_Brake = false;
+        // Reset controlli
+        currentSpeed = 0f;
+        steeringInput = 0f;
+        accelerateInput = false;
+        brakeInput = false;
     }
 
-    // Raccolta osservazioni
     public override void CollectObservations(VectorSensor sensor)
     {
-        // TODO da implementare
+        sensor.AddObservation(transform.forward);
+        sensor.AddObservation(currentSpeed);
+        sensor.AddObservation(steeringInput);
     }
 
-    // Viene chiamato ogni volta che l’agente riceve una decisione
     public override void OnActionReceived(ActionBuffers actions)
     {
-        // Branch 0: 3 possibili valori (0, 1, 2) -> -1, 0, +1
-        m_Steering = actions.DiscreteActions[0] - 1f;
-
-        // Branch 1: 2 possibili valori (0, 1) -> frena, accelera
-        if (actions.DiscreteActions[1] == 0)
+        if (!isManualControl)
         {
-            m_Accelerate = false;
-            m_Brake = true;
+            // Branch 0: steering (3 valori: -1, 0, +1)
+            steeringInput = actions.DiscreteActions[0] - 1f;
+
+            // Branch 1: accelerate or brake (2 valori)
+            if (actions.DiscreteActions[1] == 0)
+            {
+                accelerateInput = false;
+                brakeInput = true;
+            }
+            else
+            {
+                accelerateInput = true;
+                brakeInput = false;
+            }
         }
         else
         {
-            m_Accelerate = true;
-            m_Brake = false;
+            // Controlli da tastiera
+            steeringInput = Input.GetAxis("Horizontal");
+            accelerateInput = Input.GetKey(KeyCode.W);
+            brakeInput      = Input.GetKey(KeyCode.S);
         }
 
-        // Applica il movimento in base agli input
         ApplyMovement();
     }
 
-    // Applica le forze di movimento
     private void ApplyMovement()
     {
-        float moveForce = 0f;
-        if (m_Accelerate) moveForce = 500f;   // spinta in avanti
-        if (m_Brake)      moveForce = -300f; // spinta all’indietro (o freno)
+        // Accelera / Frena / Rallenta
+        if (accelerateInput)
+        {
+            currentSpeed += acceleration * Time.fixedDeltaTime;
+        }
+        else if (brakeInput)
+        {
+            currentSpeed -= brakingDeceleration * Time.fixedDeltaTime;
+        }
+        else
+        {
+            // Se non accelero né freno, rallento gradualmente
+            if (currentSpeed > 0)
+            {
+                currentSpeed -= idleDeceleration * Time.fixedDeltaTime;
+                if (currentSpeed < 0) currentSpeed = 0f; 
+            }
+            else if (currentSpeed < 0)
+            {
+                currentSpeed += idleDeceleration * Time.fixedDeltaTime;
+                if (currentSpeed > 0) currentSpeed = 0f; 
+            }
+        }
 
-        // Sterzata
-        float turnTorque = m_Steering * 100f;
+        currentSpeed = Mathf.Clamp(currentSpeed, -maxBackwardSpeed, maxForwardSpeed);
 
-        // Aggiungi forza in avanti
-        carRigidbody.AddForce(transform.forward * moveForce);
+        if (Mathf.Abs(currentSpeed) > 0)
+        {
+            // Ruota il veicolo in base allo steering
+            float turnAngle = steeringInput * turnSpeed * Time.fixedDeltaTime;
+            transform.Rotate(0f, turnAngle, 0f);
+        }
+        
 
-        // Aggiungi torque per ruotare
-        carRigidbody.AddTorque(Vector3.up * turnTorque);
+        transform.position += transform.forward * currentSpeed * Time.fixedDeltaTime;
     }
+
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Wall"))
         {
-            AddReward(-2f);
-            Debug.Log("[Wall Enter] -2");
+            AddReward(-50f);
+            Debug.Log("[Wall Enter] -50");
             // EndEpisode();
         }
         if (collision.gameObject.CompareTag("Car"))
         {
-            AddReward(-2f);
-            Debug.Log("[Car Enter] -2");
+            AddReward(-20f);
+            Debug.Log("[Car Enter] -20");
+            // EndEpisode();
         }
     }
 
@@ -112,13 +157,13 @@ public class CarAgent : Agent
     {
         if (collision.gameObject.CompareTag("Wall"))
         {
-            AddReward(-0.25f);
-            Debug.Log("[Wall Stay] -0.25");
+            AddReward(-0.5f);
+            Debug.Log("[Wall Stay] -0.5");
         }
         if (collision.gameObject.CompareTag("Car"))
         {
-            AddReward(-0.25f);
-            Debug.Log("[Car Stay] -0.25");
+            AddReward(-0.5f);
+            Debug.Log("[Car Stay] -0.5");
         }
     }
 
@@ -126,13 +171,13 @@ public class CarAgent : Agent
     {
         if (collision.gameObject.CompareTag("Wall"))
         {
-            AddReward(+3f);
-            Debug.Log("[Wall Exit] +3");
+            AddReward(+10f);
+            Debug.Log("[Wall Exit] +10");
         }
         if (collision.gameObject.CompareTag("Car"))
         {
-            AddReward(+3f);
-            Debug.Log("[Car Exit] +3");
+            AddReward(+10f);
+            Debug.Log("[Car Exit] +10");
         }
     }
 
@@ -140,8 +185,8 @@ public class CarAgent : Agent
     {
         if (other.CompareTag("RoadLine"))
         {
-            AddReward(-1f);
-            Debug.Log("[RoadLine Enter] -1");
+            AddReward(-0.5f);
+            Debug.Log("[RoadLine Enter] -0.5");
         }
 
         if (other.CompareTag("Crossing"))

@@ -101,8 +101,8 @@ Rigidbody:
   m_GameObject: {fileID: 100000}
   serializedVersion: 4
   m_Mass: 15
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Drag: 1
+  m_AngularDrag: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -165,11 +165,16 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 7500
+  MaxStep: 5000
   carRigidbody: {fileID: 4990146831045481994}
-  spawnPosition: {x: 0, y: 0, z: 0}
-  spawnForward: {x: 0, y: 0, z: 1}
+  isManualControl: 0
   checksManager: {fileID: 0}
+  maxForwardSpeed: 15
+  maxBackwardSpeed: 5
+  acceleration: 10
+  brakingDeceleration: 20
+  idleDeceleration: 5
+  turnSpeed: 60
 --- !u!65 &2624463992555100440
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -211,7 +216,7 @@ MonoBehaviour:
   m_RayLength: 20
   m_RayLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967291
+    m_Bits: 4294967240
   m_ObservationStacks: 1
   m_AlternatingRayOrder: 1
   m_UseBatchedRaycasts: 0

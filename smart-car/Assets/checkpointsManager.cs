@@ -84,7 +84,7 @@ public class CheckpointsManager : MonoBehaviour
         if (actualCarPossibleChecks[0].row == -1)
         {
             //penso si debba comunque assegnare il reward TODO
-            Debug.Log("caso base trovato: temp!!");
+            // Debug.Log("caso base trovato: temp!!");
             isTempTrovato = true;
             isCheckTrovato = true;
         }
@@ -97,16 +97,16 @@ public class CheckpointsManager : MonoBehaviour
                 if ((actualCarPossibleChecks[i].row == checkRaggiunto.row) && (actualCarPossibleChecks[i].column == checkRaggiunto.column))
                 {
                     //checkpoint trovato!
-                    carTransform.GetComponent<CarAgent>().AddReward(3f);
-                    Debug.Log("[Checkpoint OK!] +3");
+                    carTransform.GetComponent<CarAgent>().AddReward(50f);
+                    Debug.Log("[Checkpoint OK!] +50");
                     isCheckTrovato = true;
                     continue;
                 }
             }
             if (!isCheckTrovato)
             {
-                carTransform.GetComponent<CarAgent>().AddReward(-5f);
-                Debug.Log("[Checkpoint Wrong] -5");
+                carTransform.GetComponent<CarAgent>().AddReward(-10f);
+                Debug.Log("[Checkpoint Wrong] -10");
             }
         }
 
@@ -119,7 +119,7 @@ public class CheckpointsManager : MonoBehaviour
 
             if (isTempTrovato)
             {
-                Debug.Log("Primo checkpoint superato");
+                // Debug.Log("Primo checkpoint superato");
                 // fare un if dove se la riga o colonna equivale ad una delle corsie destre allora ci mettiamo quello dopo, se no verso sinistra, mettere anche le intersez.
                 if (checkpoint.row == 2 || checkpoint.row == 8 || checkpoint.row == 14)
                 {
@@ -194,14 +194,14 @@ public class CheckpointsManager : MonoBehaviour
             { //attuale = precedente con colonna uguale e +1 riga (stiamo scendendo sulla verticale, corsia sinistra)
                 if (mappaCheckpoints[(int)checkpoint.row + 1, (int)checkpoint.column] != null)
                 {
-                    Debug.Log("esiste un check successivo; non è un incrocio verticale sx");
+                    // Debug.Log("esiste un check successivo; non è un incrocio verticale sx");
                     CheckpointsListHandler temp2 = new CheckpointsListHandler();
                     temp2.initObj((int)mappaCheckpoints[(int)checkpoint.row + 1, (int)checkpoint.column].row, (int)mappaCheckpoints[(int)checkpoint.row + 1, (int)checkpoint.column].column);
                     actualCarPossibleChecks.Add(temp2);
                 }
                 else
                 {
-                    Debug.Log("ci troviamo ad un incrocio verticale sx");
+                    // Debug.Log("ci troviamo ad un incrocio verticale sx");
                     //ci troviamo ad un incrocio: inserire le 3 possibili zone in cui controllare, poi iterarci e controllare se si può (o se c'è un muro)
                     CheckpointsListHandler[] zoneInCuiControllare = new CheckpointsListHandler[3];
                     zoneInCuiControllare[0] = new CheckpointsListHandler();
@@ -231,7 +231,7 @@ public class CheckpointsManager : MonoBehaviour
             { //attuale = precedente con colonna uguale e -1 riga (stiamo salendo sulla verticale, corsia destra)
                 if (mappaCheckpoints[(int)checkpoint.row - 1, (int)checkpoint.column] != null)
                 {
-                    Debug.Log("esiste un check successivo; non è un incrocio verticale dx");
+                    // Debug.Log("esiste un check successivo; non è un incrocio verticale dx");
                     //esiste un check successivo; non è un incrocio
                     CheckpointsListHandler temp2 = new CheckpointsListHandler();
                     temp2.initObj((int)mappaCheckpoints[(int)checkpoint.row - 1, (int)checkpoint.column].row, (int)mappaCheckpoints[(int)checkpoint.row - 1, (int)checkpoint.column].column);
@@ -239,7 +239,7 @@ public class CheckpointsManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("ci troviamo ad un incrocio verticale dx");
+                    // Debug.Log("ci troviamo ad un incrocio verticale dx");
                     //ci troviamo ad un incrocio: inserire le 3 possibili zone in cui controllare, poi iterarci e controllare se si può (o se c'è un muro)
                     CheckpointsListHandler[] zoneInCuiControllare = new CheckpointsListHandler[3];
                     zoneInCuiControllare[0] = new CheckpointsListHandler();
@@ -269,7 +269,7 @@ public class CheckpointsManager : MonoBehaviour
             { //attuale = precedente con riga uguale e -1 colonna (stiamo andando a sinistra sull'orizzontale)
                 if (mappaCheckpoints[(int)checkpoint.row, (int)checkpoint.column - 1] != null)
                 {
-                    Debug.Log("esiste un check successivo; non è un incrocio orizzontale sx");
+                    // Debug.Log("esiste un check successivo; non è un incrocio orizzontale sx");
                     //esiste un check successivo; non è un incrocio
                     CheckpointsListHandler temp2 = new CheckpointsListHandler();
                     temp2.initObj((int)mappaCheckpoints[(int)checkpoint.row, (int)checkpoint.column - 1].row, (int)mappaCheckpoints[(int)checkpoint.row, (int)checkpoint.column - 1].column);
@@ -277,7 +277,7 @@ public class CheckpointsManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("ci troviamo ad un incrocio orizzontale sx");
+                    // Debug.Log("ci troviamo ad un incrocio orizzontale sx");
                     //ci troviamo ad un incrocio: inserire le 3 possibili zone in cui controllare, poi iterarci e controllare se si può (o se c'è un muro)
                     CheckpointsListHandler[] zoneInCuiControllare = new CheckpointsListHandler[3];
                     zoneInCuiControllare[0] = new CheckpointsListHandler();
@@ -307,7 +307,7 @@ public class CheckpointsManager : MonoBehaviour
             { //attuale = precedente con riga uguale e +1 colonna (stiamo andando a destra sull'orizzontale)
                 if (mappaCheckpoints[(int)checkpoint.row, (int)checkpoint.column + 1] != null)
                 {
-                    Debug.Log("esiste un check successivo; non è un incrocio orizzontale dx");
+                    // Debug.Log("esiste un check successivo; non è un incrocio orizzontale dx");
                     //esiste un check successivo; non è un incrocio
                     CheckpointsListHandler temp2 = new CheckpointsListHandler();
                     temp2.initObj((int)mappaCheckpoints[(int)checkpoint.row, (int)checkpoint.column + 1].row, (int)mappaCheckpoints[(int)checkpoint.row, (int)checkpoint.column + 1].column);
@@ -315,7 +315,7 @@ public class CheckpointsManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("ci troviamo ad un incrocio orizzontale dx");
+                    // Debug.Log("ci troviamo ad un incrocio orizzontale dx");
                     //ci troviamo ad un incrocio: inserire le 3 possibili zone in cui controllare, poi iterarci e controllare se si può (o se c'è un muro)
                     CheckpointsListHandler[] zoneInCuiControllare = new CheckpointsListHandler[3];
                     zoneInCuiControllare[0] = new CheckpointsListHandler();
@@ -343,7 +343,7 @@ public class CheckpointsManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Eravamo ad un incrocio");
+                // Debug.Log("Eravamo ad un incrocio");
                 //nessuno dei casi precedenti = eravamo ad un incrocio, capire come scegliere il prossimo check
                 CheckpointsListHandler[] zoneInCuiControllare = new CheckpointsListHandler[12];
                 //caso +1,0, farà uscire i / 3 = 0
@@ -384,8 +384,8 @@ public class CheckpointsManager : MonoBehaviour
                     int yTemp = (int)lastCheckpointCar.column + z.column;
                     if ((checkpoint.row == xTemp) && (yTemp == checkpoint.column))
                     {
-                        Debug.Log("trovato inters.");
-                        Debug.Log(i / 3);
+                        // Debug.Log("trovato inters.");
+                        // Debug.Log(i / 3);
                         trovatoCheckIncrocio = i / 3;
                         continue;
                     }
