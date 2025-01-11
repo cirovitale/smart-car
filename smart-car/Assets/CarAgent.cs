@@ -11,6 +11,10 @@ public class CarAgent : Agent
 
     public CheckpointsManager checksManager;
 
+    private float lastCheckpointTime; // Tempo dell'ultimo checkpoint
+    [SerializeField] private float penaltyInterval = 5f; // Intervallo per la penalità
+
+
     private float crossingStartTime;
 
     // Parametri di guida - la velocità è in m/s, l'accelerazione in m/s^2
@@ -41,9 +45,26 @@ public class CarAgent : Agent
         spawnRotation = transform.rotation;
     }
 
+    private void Update()
+{
+    // Controlla se è passato troppo tempo dall'ultimo checkpoint
+    if (Time.time - lastCheckpointTime > penaltyInterval)
+    {
+        AddReward(-100f); // Assegna la penalità
+        Debug.Log("[NO Checkpoint] -100");
+
+        lastCheckpointTime = Time.time;
+
+        // Termina l'episodio dopo molte penalità
+        if (GetCumulativeReward() < -2500f) EndEpisode();
+    }
+}
+
     public override void OnEpisodeBegin()
     {
         checksManager.ResetCheckpoints();
+        lastCheckpointTime = Time.time;
+
 
         // Reset fisica
         carRigidbody.linearVelocity = Vector3.zero;
@@ -169,16 +190,16 @@ public class CarAgent : Agent
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Wall"))
-        {
-            AddReward(+5f);
-            Debug.Log("[Wall Exit] +5");
-        }
-        if (collision.gameObject.CompareTag("Car"))
-        {
-            AddReward(+10f);
-            Debug.Log("[Car Exit] +10");
-        }
+        // if (collision.gameObject.CompareTag("Wall"))
+        // {
+        //     AddReward(+5f);
+        //     Debug.Log("[Wall Exit] +5");
+        // }
+        // if (collision.gameObject.CompareTag("Car"))
+        // {
+        //     AddReward(+10f);
+        //     Debug.Log("[Car Exit] +10");
+        // }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -194,6 +215,11 @@ public class CarAgent : Agent
             crossingStartTime = Time.time;
             // Debug.Log("[Trigger Enter - Crossing] at time: " + crossingStartTime);
         }
+    }
+
+    public void UpdateCheckpointTime()
+    {
+        lastCheckpointTime = Time.time;
     }
 
     private void OnTriggerExit(Collider other)

@@ -98,6 +98,7 @@ public class CheckpointsManager : MonoBehaviour
                 {
                     //checkpoint trovato!
                     carTransform.GetComponent<CarAgent>().AddReward(50f);
+                    carTransform.GetComponent<CarAgent>().UpdateCheckpointTime();
                     Debug.Log("[Checkpoint OK!] +50");
                     isCheckTrovato = true;
                     continue;
@@ -106,6 +107,8 @@ public class CheckpointsManager : MonoBehaviour
             if (!isCheckTrovato)
             {
                 carTransform.GetComponent<CarAgent>().AddReward(-10f);
+                carTransform.GetComponent<CarAgent>().UpdateCheckpointTime();
+
                 Debug.Log("[Checkpoint Wrong] -10");
             }
         }
