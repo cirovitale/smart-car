@@ -1,0 +1,47 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1736600330",
+        "python_version": "3.8.10 (tags/v3.8.10:3d8993a, May  3 2021, 11:48:03) [MSC v.1928 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\UTENTE\\git\\smart-car\\smart-car\\venv\\Scripts\\mlagents-learn config/trainer_config_001.yaml --run-id=day0111_config001_run004 --force",
+        "mlagents_version": "0.29.0",
+        "mlagents_envs_version": "0.29.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "2.4.1+cpu",
+        "numpy_version": "1.21.2",
+        "end_time_seconds": "1736600337"
+    },
+    "total": 7.2895083000000005,
+    "count": 1,
+    "self": 0.008877000000000912,
+    "children": {
+        "run_training.setup": {
+            "total": 0.13133859999999986,
+            "count": 1,
+            "self": 0.13133859999999986
+        },
+        "TrainerController.start_learning": {
+            "total": 7.149292699999999,
+            "count": 1,
+            "self": 0.00028299999999870096,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 7.1490004,
+                    "count": 1,
+                    "self": 7.1490004
+                },
+                "trainer_threads": {
+                    "total": 7.000000010748408e-07,
+                    "count": 1,
+                    "self": 7.000000010748408e-07
+                },
+                "TrainerController._save_models": {
+                    "total": 8.599999999248098e-06,
+                    "count": 1,
+                    "self": 8.599999999248098e-06
+                }
+            }
+        }
+    }
+}

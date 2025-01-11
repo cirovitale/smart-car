@@ -157,13 +157,13 @@ public class CarAgent : Agent
     {
         if (collision.gameObject.CompareTag("Wall"))
         {
-            AddReward(-0.5f);
-            Debug.Log("[Wall Stay] -0.5");
+            AddReward(-2f);
+            Debug.Log("[Wall Stay] -2");
         }
         if (collision.gameObject.CompareTag("Car"))
         {
-            AddReward(-0.5f);
-            Debug.Log("[Car Stay] -0.5");
+            AddReward(-1f);
+            Debug.Log("[Car Stay] -1");
         }
     }
 
@@ -171,8 +171,8 @@ public class CarAgent : Agent
     {
         if (collision.gameObject.CompareTag("Wall"))
         {
-            AddReward(+10f);
-            Debug.Log("[Wall Exit] +10");
+            AddReward(+5f);
+            Debug.Log("[Wall Exit] +5");
         }
         if (collision.gameObject.CompareTag("Car"))
         {
@@ -185,8 +185,8 @@ public class CarAgent : Agent
     {
         if (other.CompareTag("RoadLine"))
         {
-            AddReward(-0.5f);
-            Debug.Log("[RoadLine Enter] -0.5");
+            AddReward(-1f);
+            Debug.Log("[RoadLine Enter] -1");
         }
 
         if (other.CompareTag("Crossing"))
@@ -206,13 +206,13 @@ public class CarAgent : Agent
             // Debug.Log("[Trigger Exit - Crossing] crossing in " + crossingDuration + " seconds");
             if (crossingDuration < 2.0f)
             {
-                AddReward(-1f);
-                Debug.Log("[Crossing Exit] -1");
+                AddReward(-30f);
+                Debug.Log("[Crossing Exit] -30");
             }
             else
             {
-                AddReward(+2f);
-                Debug.Log("[Crossing Exit] +2");
+                AddReward(+10f);
+                Debug.Log("[Crossing Exit] +10");
             }
         }
 
@@ -220,6 +220,13 @@ public class CarAgent : Agent
         {
             AddReward(+1f);
             Debug.Log("[RoadLine Exit] +1");
+        }
+
+        if (other.CompareTag("Map"))
+        {
+            AddReward(-1000f);
+            Debug.Log("[Map Exit] -1000");
+            EndEpisode();
         }
     }
 
