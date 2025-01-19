@@ -12,6 +12,7 @@ TagManager:
   - CarAgent
   - Car
   - Map
+  - WallEnd
   layers:
   - Default
   - TransparentFX

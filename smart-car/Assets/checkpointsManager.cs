@@ -97,17 +97,17 @@ public class CheckpointsManager : MonoBehaviour
                 if ((actualCarPossibleChecks[i].row == checkRaggiunto.row) && (actualCarPossibleChecks[i].column == checkRaggiunto.column))
                 {
                     //checkpoint trovato!
-                    carTransform.GetComponent<CarAgent>().AddReward(50f);
-                    carTransform.GetComponent<CarAgent>().UpdateCheckpointTime();
-                    Debug.Log("[Checkpoint OK!] +50");
+                    // carTransform.GetComponent<CarAgent>().AddReward(100f);
+                    // carTransform.GetComponent<CarAgent>().UpdateCheckpointTime();
+                    Debug.Log("[Checkpoint OK!] +100");
                     isCheckTrovato = true;
                     continue;
                 }
             }
             if (!isCheckTrovato)
             {
-                carTransform.GetComponent<CarAgent>().AddReward(-10f);
-                carTransform.GetComponent<CarAgent>().UpdateCheckpointTime();
+                // carTransform.GetComponent<CarAgent>().AddReward(-10f);
+                // carTransform.GetComponent<CarAgent>().UpdateCheckpointTime();
 
                 Debug.Log("[Checkpoint Wrong] -10");
             }
