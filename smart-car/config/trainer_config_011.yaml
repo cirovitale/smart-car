@@ -24,7 +24,7 @@ behaviors:
       gail:
         strength: 0.02
         gamma: 0.99
-        demo_path: "C:\\Users\\UTENTE\\git\\smart-car\\smart-car\\Assets\\Demonstrations\\hard.demo"
+        demo_path: "C:\\Users\\UTENTE\\git\\smart-car\\smart-car\\Assets\\Demonstrations\\medium.demo"
         learning_rate: 3.0e-4
         use_actions: true
         use_vail: false

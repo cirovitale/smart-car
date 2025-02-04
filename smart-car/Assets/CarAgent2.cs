@@ -66,7 +66,7 @@ public class CarAgent2 : Agent
     private TrafficLightController currentTrafficLight = null;
     private string currentColor = "Green";
     // per on stay, considerando circa 50 frame al secondo, dare reward minimo
-    private float rewardStopOnRed = 0.1f;
+    private float rewardStopOnRed = 0.5f;
 
     private float rewardCarStay = -0.05f;
 
@@ -74,9 +74,9 @@ public class CarAgent2 : Agent
 
     private float penaltyStopOnGreenYellow = -0.1f;
     private float rewardCrossOnGreenYellow = 5f;
-    private float penaltyCrossOnRed = -5f;
+    private float penaltyCrossOnRed = -15f;
 
-    private float penaltyGoOnRed = -0.2f;
+    private float penaltyGoOnRed = -0.5f;
     private float rewardGoOnGreenYellow = 0.2f;
 
     private float minMovingSpeedThreshold = 4f;
