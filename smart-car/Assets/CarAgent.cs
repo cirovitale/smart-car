@@ -50,7 +50,7 @@ public class CarAgent : Agent
     // Controlla se è passato troppo tempo dall'ultimo checkpoint
     if (Time.time - lastCheckpointTime > penaltyInterval)
     {
-        AddReward(-100f); // Assegna la penalità
+        AddReward(-100f);
         Debug.Log("[NO Checkpoint] -100");
 
         lastCheckpointTime = Time.time;
@@ -66,15 +66,13 @@ public class CarAgent : Agent
         lastCheckpointTime = Time.time;
 
 
-        // Reset fisica
+        // Reset
         carRigidbody.linearVelocity = Vector3.zero;
         carRigidbody.angularVelocity = Vector3.zero;
 
-        // Reset posizione e rotazione
         transform.position = spawnPosition;
         transform.rotation = spawnRotation;
 
-        // Reset controlli
         currentSpeed = 0f;
         steeringInput = 0f;
         accelerateInput = false;
@@ -131,7 +129,6 @@ public class CarAgent : Agent
         }
         else
         {
-            // Se non accelero né freno, rallento gradualmente
             if (currentSpeed > 0)
             {
                 currentSpeed -= idleDeceleration * Time.fixedDeltaTime;

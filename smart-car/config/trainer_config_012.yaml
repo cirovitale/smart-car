@@ -1,0 +1,27 @@
+behaviors:
+  CarAgent:
+    trainer_type: ppo
+    hyperparameters:
+      batch_size: 1024
+      buffer_size: 10240
+      learning_rate: 0.0003
+      beta: 0.01
+      epsilon: 0.1
+      lambd: 0.95
+      num_epoch: 7
+    network_settings:
+      normalize: false
+      hidden_units: 512
+      num_layers: 3
+    reward_signals:
+      extrinsic:
+        gamma: 0.99
+        strength: 1.0
+      curiosity:
+        strength: 0.05
+        gamma: 0.99
+
+    max_steps: 50000000
+    time_horizon: 256
+    summary_freq: 25000
+    checkpoint_interval: 500000

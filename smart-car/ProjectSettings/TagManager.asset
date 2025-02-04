@@ -13,6 +13,10 @@ TagManager:
   - Car
   - Map
   - WallEnd
+  - Stop
+  - TrafficLightZone
+  - StopLine
+  - FinishWrong
   layers:
   - Default
   - TransparentFX

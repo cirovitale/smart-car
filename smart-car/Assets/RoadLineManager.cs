@@ -7,7 +7,7 @@ public class RoadLineManager : MonoBehaviour
     [Tooltip("Assegna qui il GameObject che contiene come figli tutti i segmenti di RoadLine.")]
     public Transform roadLinesParent;
 
-    // Qui memorizzeremo tutti i children
+    // memorizzo tutti i children
     private Transform[] allLines;
 
     private void Awake()
@@ -28,11 +28,6 @@ public class RoadLineManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Restituisce il Transform della RoadLine più vicina alla posizione data.
-    /// </summary>
-    /// <param name="position">La posizione da cui calcolare la distanza.</param>
-    /// <returns>Il Transform della roadline più vicina, o null se non ci sono linee.</returns>
     public Transform GetClosestRoadLine(Vector3 position)
     {
         if (allLines == null || allLines.Length == 0)
@@ -55,10 +50,7 @@ public class RoadLineManager : MonoBehaviour
 
         return closest;
     }
-
-    /// <summary>
-    /// Ritorna l'array di tutte le roadline (utile se vuoi scorrerle manualmente).
-    /// </summary>
+    
     public Transform[] GetAllRoadLines()
     {
         return allLines;
