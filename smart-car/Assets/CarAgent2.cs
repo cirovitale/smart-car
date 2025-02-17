@@ -34,8 +34,8 @@ public class CarAgent2 : Agent
 
     // Reward/Penalty definiti come variabili
     private float rewardWallEnter         = -1f;
-    private float rewardWallEnterLightZone = -4f;  
-    private float rewardWallEnterLightZoneStay = -0.5f;    
+    private float rewardWallEnterLightZone = -7f;  
+    private float rewardWallEnterLightZoneStay = -1f;    
     private float rewardWallExit          = 0f;  
     // private float rewardCarEnter          = -0.4f; 
     // private float rewardCarExit           = 0.2f;  
@@ -247,11 +247,11 @@ public class CarAgent2 : Agent
 
     private void Update()
     {
-        if (GetCumulativeReward() < -500f) EndEpisode();
+        if (GetCumulativeReward() < -1000f) EndEpisode();
         // if (Time.time - lastCheckpointTime > penaltyInterval)
         // {
         //     AddReward(-50f); 
-        //     Debug.Log("[NO Checkpoint] -50");
+        //     // Debug.Log("[NO Checkpoint] -50");
         //     lastCheckpointTime = Time.time;
 
         //     if (GetCumulativeReward() < -3000f) EndEpisode();
@@ -261,7 +261,7 @@ public class CarAgent2 : Agent
         if (transform.position.y < -1f)
         {
             AddReward(penaltyEndMap);
-            Debug.Log("Caduto fuori dal mondo: " + penaltyEndMap);
+            // Debug.Log("Caduto fuori dal mondo: " + penaltyEndMap);
             EndEpisode();
         }
     }
@@ -446,7 +446,7 @@ public class CarAgent2 : Agent
         if (speedMagnitude < minMovingSpeedThreshold && !isInRedZone)
         {
             AddReward(penaltyVelocity);
-            Debug.Log("[Low Speed Penalty] " + penaltyVelocity);
+            // Debug.Log("[Low Speed Penalty] " + penaltyVelocity);
         }
     }
 
@@ -494,22 +494,22 @@ public class CarAgent2 : Agent
             if(currentTrafficLight != null)
             {
                 AddReward(rewardWallEnterLightZone);
-                Debug.Log("[Wall Enter Light Zone] " + rewardWallEnterLightZone);
+                // Debug.Log("[Wall Enter Light Zone] " + rewardWallEnterLightZone);
             } else {
                 AddReward(rewardWallEnter);
-                Debug.Log("[Wall Enter] " + rewardWallEnter);
+                // Debug.Log("[Wall Enter] " + rewardWallEnter);
             }
         }
         if (collision.gameObject.CompareTag("Car") && !isSimpleTrack)
         {
             AddReward(rewardCarEnter);
-            Debug.Log("[Car Enter] " + rewardCarEnter);
+            // Debug.Log("[Car Enter] " + rewardCarEnter);
         }
 
         if (collision.gameObject.CompareTag("WallEnd"))
         {
             AddReward(rewardWallEndEnter);
-            Debug.Log("[Wall End Enter] " + rewardWallEndEnter);
+            // Debug.Log("[Wall End Enter] " + rewardWallEndEnter);
             EndEpisode();
         }
     }
@@ -521,16 +521,16 @@ public class CarAgent2 : Agent
             if(currentTrafficLight != null)
             {
                 AddReward(rewardWallEnterLightZoneStay);
-                Debug.Log("[Wall Stay Light Zone] " + rewardWallEnterLightZoneStay);
+                // Debug.Log("[Wall Stay Light Zone] " + rewardWallEnterLightZoneStay);
             } else {
                 AddReward(rewardWallStay);
-            Debug.Log("[Wall Stay] " + rewardWallStay);
+            // Debug.Log("[Wall Stay] " + rewardWallStay);
             }
         }
         if (collision.gameObject.CompareTag("Car") && !isSimpleTrack)
         {
             AddReward(rewardCarStay);
-            Debug.Log("[Car Stay] " + rewardCarStay);
+            // Debug.Log("[Car Stay] " + rewardCarStay);
         }
     }
 
@@ -539,12 +539,12 @@ public class CarAgent2 : Agent
         if (collision.gameObject.CompareTag("Wall"))
         {
             AddReward(rewardWallExit);
-            Debug.Log("[Wall Exit] " + rewardWallExit);
+            // Debug.Log("[Wall Exit] " + rewardWallExit);
         }
         if (collision.gameObject.CompareTag("Car") && !isSimpleTrack)
         {
             AddReward(rewardCarExit);
-            Debug.Log("[Car Exit] " + rewardCarExit);
+            // Debug.Log("[Car Exit] " + rewardCarExit);
         }
     }
 
@@ -557,7 +557,7 @@ public class CarAgent2 : Agent
             {
                 AddReward(rewardWrongCheckpoint);
                 EndEpisode();
-                Debug.Log("[Checkpoint] Parsing fallito => " + rewardWrongCheckpoint);
+                // Debug.Log("[Checkpoint] Parsing fallito => " + rewardWrongCheckpoint);
                 return;
             }
 
@@ -570,7 +570,7 @@ public class CarAgent2 : Agent
                     if (newGroup == 1 && newIndex == 0)
                     {
                         AddReward(rewardBonusBranchCheckpoint); 
-                        Debug.Log("[Checkpoint Incrocio]: " + rewardBonusBranchCheckpoint);
+                        // Debug.Log("[Checkpoint Incrocio]: " + rewardBonusBranchCheckpoint);
                         favorBranchOne = false; 
                     }
                 }
@@ -579,7 +579,7 @@ public class CarAgent2 : Agent
                     if (newGroup == 2 && newIndex == 0)
                     {
                         AddReward(rewardBonusBranchCheckpoint); // bonusCheckpointIntersection
-                        Debug.Log("[Checkpoint Incrocio]: " + rewardBonusBranchCheckpoint);
+                        // Debug.Log("[Checkpoint Incrocio]: " + rewardBonusBranchCheckpoint);
                         favorBranchOne = true; 
                     }
                 }
@@ -593,10 +593,10 @@ public class CarAgent2 : Agent
                     if (newGroup == 0 && newIndex == 0)
                     {
                         AddReward(0);
-                        Debug.Log("[Checkpoint] Raggiunto (0, 0) => Ricompensa: 0");
+                        // Debug.Log("[Checkpoint] Raggiunto (0, 0) => Ricompensa: 0");
                     } else {
                         AddReward(rewardRightCheckpoint);
-                        Debug.Log($"[Checkpoint] CORRETTO: da ({currentCheckpointGroup},{currentCheckpointIndex}) a ({newGroup},{newIndex}) => +{rewardRightCheckpoint}");
+                        // Debug.Log($"[Checkpoint] CORRETTO: da ({currentCheckpointGroup},{currentCheckpointIndex}) a ({newGroup},{newIndex}) => +{rewardRightCheckpoint}");
                     }
 
                     // Aggiorna lo stato attuale
@@ -607,21 +607,21 @@ public class CarAgent2 : Agent
                 {
                     AddReward(rewardWrongCheckpoint);
                     EndEpisode();
-                    Debug.Log($"[Checkpoint] SBAGLIATO: ({newGroup},{newIndex}) non valido da ({currentCheckpointGroup},{currentCheckpointIndex}) => {rewardWrongCheckpoint}");
+                    // Debug.Log($"[Checkpoint] SBAGLIATO: ({newGroup},{newIndex}) non valido da ({currentCheckpointGroup},{currentCheckpointIndex}) => {rewardWrongCheckpoint}");
                 }
             }
             else
             {
                 AddReward(rewardWrongCheckpoint);
                 EndEpisode();
-                Debug.Log($"[Checkpoint] Nessuna transizione definita per ({currentCheckpointGroup},{currentCheckpointIndex}) => {rewardWrongCheckpoint}");
+                // Debug.Log($"[Checkpoint] Nessuna transizione definita per ({currentCheckpointGroup},{currentCheckpointIndex}) => {rewardWrongCheckpoint}");
             }
         }
 
         if (other.CompareTag("RoadLine") && !isSimpleTrack)
         {
             AddReward(rewardRoadLineEnter);
-            Debug.Log("[RoadLine Enter] " + rewardRoadLineEnter);
+            // Debug.Log("[RoadLine Enter] " + rewardRoadLineEnter);
         }
 
         if (other.CompareTag("Crossing") && !isSimpleTrack)
@@ -638,7 +638,7 @@ public class CarAgent2 : Agent
             {
                 currentTrafficLight = tl;
                 currentColor = currentTrafficLight.GetCurrentColor();
-                Debug.Log($"[TrafficLightZone] Enter => {currentColor}");
+                // Debug.Log($"[TrafficLightZone] Enter => {currentColor}");
             }
         }
         // STOP line
@@ -648,13 +648,13 @@ public class CarAgent2 : Agent
             {
                 // Penalty se attraversa il rosso
                 AddReward(penaltyCrossOnRed);
-                Debug.Log($"[StopLine] Crossed on Red => {penaltyCrossOnRed}");
+                // Debug.Log($"[StopLine] Crossed on Red => {penaltyCrossOnRed}");
             }
             else if (currentColor == "Green" || currentColor == "Yellow")
             {
                 // Reward se attraversa con verde o giallo
                 AddReward(rewardCrossOnGreenYellow);
-                Debug.Log($"[StopLine] Crossed on {currentColor} => {rewardCrossOnGreenYellow}");
+                // Debug.Log($"[StopLine] Crossed on {currentColor} => {rewardCrossOnGreenYellow}");
             }
 
             currentTrafficLight = null;
@@ -688,19 +688,19 @@ public class CarAgent2 : Agent
             if (crossingDuration < 1.0f)
             {
                 AddReward(rewardCrossingExitFast);
-                Debug.Log("[Crossing Exit] " + rewardCrossingExitFast);
+                // Debug.Log("[Crossing Exit] " + rewardCrossingExitFast);
             }
             else
             {
                 AddReward(rewardCrossingExitSlow);
-                Debug.Log("[Crossing Exit] " + rewardCrossingExitSlow);
+                // Debug.Log("[Crossing Exit] " + rewardCrossingExitSlow);
             }
         }
 
         if (other.CompareTag("RoadLine") && !isSimpleTrack)
         {
             AddReward(rewardRoadLineExit);
-            Debug.Log("[RoadLine Exit] " + rewardRoadLineExit);
+            // Debug.Log("[RoadLine Exit] " + rewardRoadLineExit);
         }
 
         if (other.CompareTag("Stop"))
@@ -724,7 +724,7 @@ public class CarAgent2 : Agent
         if (other.CompareTag("RoadLine") && !isSimpleTrack)
         {
             AddReward(rewardRoadLineStay);
-            Debug.Log("[RoadLine Stay] " + rewardRoadLineStay);
+            // Debug.Log("[RoadLine Stay] " + rewardRoadLineStay);
         }
 
         if (other.CompareTag("TrafficLightZone"))
@@ -734,7 +734,7 @@ public class CarAgent2 : Agent
                 currentColor = currentTrafficLight.GetCurrentColor();
             }
 
-            Debug.Log($"[TrafficLightZone] Stay => {currentColor}");
+            // Debug.Log($"[TrafficLightZone] Stay => {currentColor}");
 
 
 
@@ -775,7 +775,7 @@ public class CarAgent2 : Agent
                     // if (greenSpeedTimer > 4.0f)
                     // {
                     //     AddReward(-50f);
-                    //     Debug.Log("[Penalità bug semaforo] -50");
+                    //     // Debug.Log("[Penalità bug semaforo] -50");
                     //     EndEpisode();
                     // }
                     AddReward(rewardGoOnGreenYellow);
