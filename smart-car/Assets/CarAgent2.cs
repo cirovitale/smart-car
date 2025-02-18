@@ -7,7 +7,9 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Rigidbody))]
 public class CarAgent2 : Agent
 {
-    
+    public int startCheckpointGroup;
+    public int startCheckpointIndex;
+
     private Rigidbody carRigidbody;
     public bool isManualControl = false;
 
@@ -282,8 +284,8 @@ public class CarAgent2 : Agent
         accelerateInput = false;
         brakeInput = false;
 
-        currentCheckpointGroup = 0;
-        currentCheckpointIndex = 0;
+        currentCheckpointGroup = startCheckpointGroup;
+        currentCheckpointIndex = startCheckpointIndex;
 
         if (isSimpleTrack)
         {
