@@ -1,3 +1,71 @@
+- [ENGLISH VERSION](#english-version)
+- [ITALIAN VERSION](#italian-version)
+
+# ENGLISH VERSION
+# Smart Car 🚗
+
+Project developed as part of the Information Visualization course at the University of Salerno.
+
+## 👥 Team
+
+- [Simone Scermino](https://github.com/Hikki00)
+- [Ciro Vitale](https://github.com/cirovitale)
+
+## 📝 Description
+
+The project addresses Smart Mobility challenges, focusing on safe driving and compliance with road signs, both horizontal and vertical, through a Unity simulation enhanced by Reinforcement Learning techniques.
+
+### Objectives
+
+- Creation of a realistic simulation environment in Unity
+- Implementation of an autonomous agent with environmental perception capabilities
+- Agent training through Reinforcement Learning
+- Testing the agent in diverse scenarios to evaluate its generalization capability
+
+## 🛠️ Technologies Used
+
+- Unity
+- ML-Agents
+- TensorBoard
+
+## 🚀 Getting Started
+
+### Demo
+
+1. Download the project
+2. Open the `smart-car` folder in Unity
+3. Press Play to start the simulation with 5 karts using the best model (available in the `results` folder)
+
+### Training and Monitoring
+
+1. Create a Python virtual environment
+2. Activate the virtual environment 
+3. Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+4. Run the training:
+
+```bash
+mlagents-learn config/trainer_config.yaml --run-id=run001
+```
+
+5. Monitor the training with TensorBoard:
+
+```bash
+tensorboard --logdir=results --port=6006
+```
+
+## 📊 Presentation
+
+You can watch a demo video at the following link: [demo video](https://youtu.be/3ezWncyGiuk).
+
+For more details on the project, please refer to the [complete presentation](https://docs.google.com/presentation/d/1Xg_qV4EM3N4ziOxmwtLusDE-ioAwfoSk/), for a correct viewing experience, view it in `presentation mode`.
+
+
+# ITALIAN VERSION
 # Smart Car 🚗
 
 Progetto realizzato nell'ambito del corso di Information Visualization presso l'Università degli Studi di Salerno.
