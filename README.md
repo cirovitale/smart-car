@@ -56,4 +56,5 @@ tensorboard --logdir=results --port=6006
 
 ## 📊 Presentazione
 
-Per maggiori dettagli sul progetto, consultare la [presentazione completa](https://docs.google.com/presentation/d/1Xg_qV4EM3N4ziOxmwtLusDE-ioAwfoSk/edit?usp=sharing&ouid=111633735440527121404&rtpof=true&sd=true).
+È possibile visionare la demo al [seguente link](https://youtu.be/3ezWncyGiuk).
+Per maggiori dettagli sul progetto, consultare la [presentazione completa](https://docs.google.com/presentation/d/1Xg_qV4EM3N4ziOxmwtLusDE-ioAwfoSk/), per una corretta fruizione, visionare in `modalità presentazione`.
