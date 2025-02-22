@@ -1,0 +1,56 @@
+{
+    "CarAgent": {
+        "checkpoints": [
+            {
+                "steps": 7499880,
+                "file_path": "results\\day0204_config012_run001\\CarAgent\\CarAgent-7499880.onnx",
+                "reward": -121.84401988983154,
+                "creation_time": 1738684581.703668,
+                "auxillary_file_paths": [
+                    "results\\day0204_config012_run001\\CarAgent\\CarAgent-7499880.pt"
+                ]
+            },
+            {
+                "steps": 7999866,
+                "file_path": "results\\day0204_config012_run001\\CarAgent\\CarAgent-7999866.onnx",
+                "reward": -77.03535111745198,
+                "creation_time": 1738686113.7040138,
+                "auxillary_file_paths": [
+                    "results\\day0204_config012_run001\\CarAgent\\CarAgent-7999866.pt"
+                ]
+            },
+            {
+                "steps": 8499840,
+                "file_path": "results\\day0204_config012_run001\\CarAgent\\CarAgent-8499840.onnx",
+                "reward": 192.88358869552613,
+                "creation_time": 1738687636.388751,
+                "auxillary_file_paths": [
+                    "results\\day0204_config012_run001\\CarAgent\\CarAgent-8499840.pt"
+                ]
+            },
+            {
+                "steps": 8999824,
+                "file_path": "results\\day0204_config012_run001\\CarAgent\\CarAgent-8999824.onnx",
+                "reward": 102.70866680145264,
+                "creation_time": 1738689165.039258,
+                "auxillary_file_paths": [
+                    "results\\day0204_config012_run001\\CarAgent\\CarAgent-8999824.pt"
+                ]
+            },
+            {
+                "steps": 9499866,
+                "file_path": "results\\day0204_config012_run001\\CarAgent\\CarAgent-9499866.onnx",
+                "reward": 219.58000707626343,
+                "creation_time": 1738690727.497252,
+                "auxillary_file_paths": [
+                    "results\\day0204_config012_run001\\CarAgent\\CarAgent-9499866.pt"
+                ]
+            }
+        ]
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.29.0",
+        "torch_version": "2.4.1+cpu"
+    }
+}

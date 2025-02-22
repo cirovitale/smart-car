@@ -1,0 +1,65 @@
+{
+    "CarAgent": {
+        "checkpoints": [
+            {
+                "steps": 999793,
+                "file_path": "results\\day0204_config011_run003\\CarAgent\\CarAgent-999793.onnx",
+                "reward": -130.4780216217041,
+                "creation_time": 1738707038.8846583,
+                "auxillary_file_paths": [
+                    "results\\day0204_config011_run003\\CarAgent\\CarAgent-999793.pt"
+                ]
+            },
+            {
+                "steps": 1499791,
+                "file_path": "results\\day0204_config011_run003\\CarAgent\\CarAgent-1499791.onnx",
+                "reward": -130.99504709243774,
+                "creation_time": 1738708690.2876499,
+                "auxillary_file_paths": [
+                    "results\\day0204_config011_run003\\CarAgent\\CarAgent-1499791.pt"
+                ]
+            },
+            {
+                "steps": 1999910,
+                "file_path": "results\\day0204_config011_run003\\CarAgent\\CarAgent-1999910.onnx",
+                "reward": 39.32645684480667,
+                "creation_time": 1738710386.8195162,
+                "auxillary_file_paths": [
+                    "results\\day0204_config011_run003\\CarAgent\\CarAgent-1999910.pt"
+                ]
+            },
+            {
+                "steps": 2499774,
+                "file_path": "results\\day0204_config011_run003\\CarAgent\\CarAgent-2499774.onnx",
+                "reward": 7.4999659061431885,
+                "creation_time": 1738712067.3454041,
+                "auxillary_file_paths": [
+                    "results\\day0204_config011_run003\\CarAgent\\CarAgent-2499774.pt"
+                ]
+            },
+            {
+                "steps": 2822510,
+                "file_path": "results\\day0204_config011_run003\\CarAgent\\CarAgent-2822510.onnx",
+                "reward": null,
+                "creation_time": 1738713168.308071,
+                "auxillary_file_paths": [
+                    "results\\day0204_config011_run003\\CarAgent\\CarAgent-2822510.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 2822510,
+            "file_path": "results\\day0204_config011_run003\\CarAgent.onnx",
+            "reward": null,
+            "creation_time": 1738713168.308071,
+            "auxillary_file_paths": [
+                "results\\day0204_config011_run003\\CarAgent\\CarAgent-2822510.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.29.0",
+        "torch_version": "2.4.1+cpu"
+    }
+}
