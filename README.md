@@ -1,8 +1,9 @@
-- [ENGLISH VERSION](#english-version)
-- [ITALIAN VERSION](#italian-version)
+# Language:
+- 🇬🇧 [ENGLISH VERSION](#english-version)
+- 🇮🇹 [ITALIAN VERSION](#italian-version)
 
 # ENGLISH VERSION
-# Smart Car 🚗
+# Smart Car 🧠🚗
 
 Project developed as part of the Information Visualization course at the University of Salerno.
 
@@ -66,7 +67,7 @@ For more details on the project, please refer to the [complete presentation](htt
 
 
 # ITALIAN VERSION
-# Smart Car 🚗
+# Smart Car 🧠🚗
 
 Progetto realizzato nell'ambito del corso di Information Visualization presso l'Università degli Studi di Salerno.
 
